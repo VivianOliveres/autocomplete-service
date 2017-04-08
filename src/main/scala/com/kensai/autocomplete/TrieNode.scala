@@ -1,7 +1,7 @@
 package com.kensai.autocomplete
 
 
-class TriNode(var nodeValue: String, var isEndWord: Boolean, var children: Set[TriNode]) extends StringUtil {
+class TrieNode(var nodeValue: String, var isEndWord: Boolean, var children: Set[TrieNode]) extends StringUtil {
 
   def this() = this("", false, Set())
   def this(nodeValue: String) = this(nodeValue, true, Set())
@@ -21,28 +21,28 @@ class TriNode(var nodeValue: String, var isEndWord: Boolean, var children: Set[T
         }
       })
 
-      children = children + new TriNode(newValueToInsert, true)
+      children = children + new TrieNode(newValueToInsert, true)
 
     } else {
       val prefix = intersection(nodeValue, toInsert)
       val oldSubstring = nodeValue.replaceFirst(prefix, "")
       val suffixToInsert = toInsert.replaceFirst(prefix, "")
       nodeValue = prefix
-      children = Set(new TriNode(oldSubstring, isEndWord, children), new TriNode(suffixToInsert, true))
+      children = Set(new TrieNode(oldSubstring, isEndWord, children), new TrieNode(suffixToInsert, true))
       isEndWord = false
     }
   }
 
   override def toString: String = {
     val childrenToString: String = children.toList
-                                           .sortBy((node: TriNode) => node.nodeValue)
-                                           .foldLeft("") { (s: String, node: TriNode) => s + ", " + node }
+                                           .sortBy((node: TrieNode) => node.nodeValue)
+                                           .foldLeft("") { (s: String, node: TrieNode) => s + ", " + node }
     "[" + nodeValue + "(" + isEndWord + ") -> {" + childrenToString + "}]"
   }
 
   override def equals(that: Any): Boolean =
     that match {
-      case that: TriNode => that.nodeValue == nodeValue && that.isEndWord == isEndWord && that.children == children
+      case that: TrieNode => that.nodeValue == nodeValue && that.isEndWord == isEndWord && that.children == children
       case _ => false
     }
 }
