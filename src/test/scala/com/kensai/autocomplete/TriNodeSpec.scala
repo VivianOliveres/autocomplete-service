@@ -1,6 +1,5 @@
 package com.kensai.autocomplete
 
-import collection.mutable.Stack
 import org.scalatest._
 
 class TriNodeSpec extends FlatSpec with Matchers {
