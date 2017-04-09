@@ -38,15 +38,38 @@ class TrieNode(var nodeValue: String, var isEndWord: Boolean, var children: Set[
       return List(nodeValue)
     }
 
-    children.flatMap(node => node.list())
-            .map(word => nodeValue + word)
-            .toList
+    val returnValue: List[String] = children.flatMap(node => node.list())
+                                            .map(word => nodeValue + word)
+                                            .toList
+    if (isEndWord) {
+      nodeValue :: returnValue
+    } else {
+      returnValue
+    }
+  }
+
+  def suggest(input: String): List[String] = {
+    if (input.length <= nodeValue.length) {
+      if (nodeValue.startsWith(input)) {
+        list()
+      } else {
+        List()
+      }
+
+    } else {
+      val suffix = input.replaceFirst(nodeValue, "")
+      children.filter(child => !intersection(child.nodeValue, suffix).isEmpty)
+              .flatMap(child => child.suggest(suffix))
+              .filter(word => !word.isEmpty)
+              .map(word => nodeValue + word)
+              .toList
+    }
   }
 
   override def toString: String = {
     val childrenToString: String = children.toList
-                                           .sortBy((node: TrieNode) => node.nodeValue)
-                                           .foldLeft("") { (s: String, node: TrieNode) => s + ", " + node }
+                                           .sortBy(node => node.nodeValue)
+                                           .foldLeft("") { (str, node) => str + ", " + node }
     "[" + nodeValue + "(" + isEndWord + ") -> {" + childrenToString + "}]"
   }
 
