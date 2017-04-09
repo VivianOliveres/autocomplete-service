@@ -51,7 +51,26 @@ class TrieNodeSpec extends FlatSpec with Matchers {
     val expectedAld = new TrieNode("ald", true)
     expectedU.children = expectedU.children + expectedAld
     root should be (expectedFourthRoot)
-    println(root)
+  }
+
+  "List" should "return a list of all values inserted" in {
+    val root = new TrieNode()
+    root.insert("romulus")
+    root.insert("romus")
+    root.insert("toto")
+    root.insert("rome")
+    root.insert("totoro")
+    root.insert("romuald")
+
+    val words: List[String] = root.list()
+
+    words should contain ("romulus")
+    words should contain ("romus")
+    words should contain ("toto")
+    words should contain ("rome")
+    words should contain ("totoro")
+    words should contain ("romuald")
+    words should have size 6
   }
 
 }

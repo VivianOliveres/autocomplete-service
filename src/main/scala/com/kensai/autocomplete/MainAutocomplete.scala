@@ -11,5 +11,6 @@ object MainAutocomplete {
     root.insert("totoro")
     root.insert("romuald")
     println(root)
+    println(root.list())
   }
 }

@@ -33,6 +33,16 @@ class TrieNode(var nodeValue: String, var isEndWord: Boolean, var children: Set[
     }
   }
 
+  def list(): List[String] = {
+    if (children.isEmpty) {
+      return List(nodeValue)
+    }
+
+    children.flatMap(node => node.list())
+            .map(word => nodeValue + word)
+            .toList
+  }
+
   override def toString: String = {
     val childrenToString: String = children.toList
                                            .sortBy((node: TrieNode) => node.nodeValue)
