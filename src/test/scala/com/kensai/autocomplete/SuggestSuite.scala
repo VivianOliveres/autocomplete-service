@@ -2,7 +2,7 @@ package com.kensai.autocomplete
 
 import org.scalatest._
 
-class SuggestSpec extends FunSuite with Matchers with BeforeAndAfter {
+class SuggestSuite extends FunSuite with Matchers with BeforeAndAfter {
 
   val root = new TrieNode()
 

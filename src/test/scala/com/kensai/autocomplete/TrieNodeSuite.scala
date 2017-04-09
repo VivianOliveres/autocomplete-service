@@ -2,9 +2,9 @@ package com.kensai.autocomplete
 
 import org.scalatest._
 
-class TrieNodeSpec extends FlatSpec with Matchers {
+class TrieNodeSuite extends FunSuite with Matchers {
 
-  "Insertion" should "create correct model" in {
+  test("Create a model by inserting new words") {
     val root = new TrieNode()
 
     // Insert Romulus
@@ -53,7 +53,7 @@ class TrieNodeSpec extends FlatSpec with Matchers {
     root should be (expectedFourthRoot)
   }
 
-  "List" should "return a list of all values inserted" in {
+  test("List all words from the model") {
     val root = new TrieNode()
     root.insert("romulus")
     root.insert("romus")
@@ -72,5 +72,4 @@ class TrieNodeSpec extends FlatSpec with Matchers {
     words should contain ("romuald")
     words should have size 6
   }
-
 }
